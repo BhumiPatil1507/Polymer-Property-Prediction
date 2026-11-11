@@ -268,19 +268,19 @@ The current ExtraTrees-based ensemble achieved R² values of 0.8801 for Cp, 0.89
 
 A fair comparison with published models would require evaluating all models on the same dataset, with identical train-test splits, target transformations and evaluation metrics.
 
-## SMILES-to-Image Conversion: Demo
+### SMILES-to-Image Conversion: Demo
 
 Polymer SMILES representations were converted into 2D molecular structure images using RDKit. This step provides a visual representation of the polymer repeat units and helps inspect the generated molecular structures.
 
-### Example Generated Polymer Structures
+**Example Generated Polymer Structures**
 
 The following examples demonstrate the SMILES-to-image conversion pipeline.
 
 | Example | Generated structure |
 |---|---|
-| Polymer 1 | ![Polymer 1](Demo/SMILES_to_Images/polymer_000001.png) |
-| Polymer 2 | ![Polymer 2](Demo/SMILES_to_Images/polymer_000002.png) |
-| Polymer 3 | ![Polymer 3](Demo/SMILES_to_Images/polymer_000003.png) |
+| Polymer 1 | ![Polymer 1](Demo/SMILES_to_Images/polymer_000000.png) |
+| Polymer 2 | ![Polymer 2](Demo/SMILES_to_Images/polymer_000001.png) |
+| Polymer 3 | ![Polymer 3](Demo/SMILES_to_Images/polymer_000002.png) |
 
 *Note: Replace these example filenames with actual generated image filenames from the project.*
 
