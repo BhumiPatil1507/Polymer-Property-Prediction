@@ -1,46 +1,45 @@
 # Polymer Property Prediction Using Multi-Expert Machine Learning, MoE and RidgeStack
 ## 1. Project Overview
 
-This project focuses on developing a computational framework for polymer representation, molecular feature generation, and machine learning-based prediction of polymer properties.
+This project focuses on developing a computational framework for polymer representation, molecular feature generation and machine learning-based prediction of polymer properties.
 
-The workflow includes converting polymer SMILES representations into 2D molecular structure images using RDKit. These generated images provide a visual representation of polymer structures.
+The work includes converting polymer SMILES representations into 2D molecular structure images using RDKit and generating multiple molecular feature representations.
 
-In addition, multiple molecular feature representations are generated from polymer structures, including molecular fingerprints, molecular descriptors, graph-based features, and functional group representations.
+Three polymer properties are investigated:
 
-These features are used to train individual XGBoost regression models for predicting six polymer properties: 
-1. Heat capacity (Cp)
-2. Atomization Energy (Eat)
-3. Young's modulus (YM)
-4. Elongation at break (epsb)
-5. Tensile strength (TSy)
-6. Tensile strength at break (TSb)
+- Heat Capacity (Cp)
 
-The predictions from these individual experts are then combined using two ensemble approaches:
+- Atomization Energy (Eat)
 
-**MoE(ExtraTrees)**: A nonlinear stacking approach that learns how to combine predictions from individual experts.
+- Elongation at Break (epsb)
+
+Four independent XGBoost regression models are trained using different molecular representations. Their predictions are combined using two ensemble approaches:
+
+**MoE (ExtraTrees):** An ExtraTrees-based nonlinear stacking approach that learns to combine predictions from individual experts.
 
 **RidgeStack:** A regularized linear stacking approach that combines predictions from individual experts.
 
-The project also explores prediction disagreement among individual experts to investigate model uncertainty and its relationship with prediction errors.
-
+The project also investigates disagreement among individual experts to understand its relationship with prediction errors.
 
 ## 2. Project Objectives
 
-The main objectives of this work are:
+The main objectives are:
 
-1. **SMILES-to-Image Conversion:** Generate 2D molecular structure images from polymer SMILES representations using RDKit.
+- **SMILES-to-Image Conversion:** Generate 2D molecular structure images from polymer SMILES using RDKit.
 
-2. **Polymer Feature Generation:** Generate multiple molecular feature representations, including molecular fingerprints, molecular descriptors, graph-based features, and functional group features.
+- **Feature Generation:** Generate molecular fingerprints, molecular descriptors, graph-based features and functional group representations.
 
-3. **Individual Expert Model Development:** Train separate XGBoost regression models using different molecular feature representations to predict polymer properties.
+- **Expert Model Development:** Train separate XGBoost regression models using different feature representations.
 
-4. **Ensemble Model Development:** Combine predictions from individual experts using ExtraTrees-based nonlinear stacking and RidgeStack.
+- **Ensemble Development:** Combine expert predictions using ExtraTrees-based stacking and RidgeStack.
 
-5. **Model Performance Evaluation:** Compare individual expert models and ensemble approaches using R², MAE, and RMSE.
+- **Performance Evaluation:** Compare models using R², MAE and RMSE.
 
-6. **Uncertainty Analysis:** Investigate disagreement among individual expert predictions and examine its relationship with prediction errors.
+- **Uncertainty Analysis:** Investigate prediction disagreement and its relationship with absolute prediction errors.
 
-7. **Reproducibility:** Save trained models, preprocessing artifacts, predictions, evaluation metrics, generated images, and experimental outputs to support future inference and reproducibility.
+- **Literature-Based Analysis:** Study selected polymers using published material-property data to interpret the predicted structure–property relationships.
+
+- **Reproducibility:** Save trained models, predictions, evaluation metrics, generated images and experimental outputs.
 
 
 ## 3. Molecular Feature Representations
@@ -181,9 +180,6 @@ The following table presents the R² scores obtained on the respective test sets
 |Cp|0.8676|0.6515|0.3986|0.3914|0.8801|0.8788|
 |Eat|0.8830|0.7006|0.4262|0.4294|0.8930|0.8917|
 |epsb|0.7285|0.5691|0.4738|0.2066|0.7548|0.7503|
-|TSy|0.7921|0.5884|0.4424|0.2845|0.8062|0.8045|
-|TSb|0.8416|0.6916|0.5970|0.3764|0.8521|0.8501|
-|YM|0.7990|0.5639|0.4434|0.1965|0.8140|0.8103|
 
 **7.2 Overall Performance Observations**
 
@@ -208,9 +204,6 @@ The ensemble models were further evaluated using R², RMSE and MAE.
 |Cp|0.8801|0.03889|0.02895|0.8788|0.03912|0.02922|
 |Eat|0.8930|0.04763|0.03547|0.8917|0.04792|0.03578|
 |epsb|0.7548|6.31052|3.36704|0.7503|6.36822|3.41937|
-|TSy|0.8062|5.18220|3.91430|0.8045|5.20504|3.93173|
-|TSb|0.8521|6.64089|4.97103|0.8501|6.68596|5.00181|
-|YM|0.8140 |154.14788|114.46079|0.8103|155.68049|115.54821|
 
 The ExtraTrees-based ensemble achieved slightly better results than RidgeStack across all reported properties, with higher R² and lower RMSE and MAE.
 
@@ -226,7 +219,7 @@ The Google Drive repository contains the following:
 
 **1. Trained Models and Evaluation Results**
 
-For each target property (Cp, Eat, YM, epsb, TSy and TSb), the corresponding results folder contains:
+For each target property (Cp, Eat, epsb), the corresponding results folder contains:
 
 - **Models:** Trained individual expert models and ensemble models.
 - **Predictions:** Test-set predictions from individual experts and combined models.
@@ -257,8 +250,43 @@ The Drive folder also contains intermediate and final outputs generated during m
 
 _Note:_ The GitHub repository provides the source code, notebooks, and project documentation. Google Drive hosts the larger datasets, trained model artifacts, generated images, feature files, and experimental results to facilitate access and reproducibility.
 
+## 8. Comparison with Published State-of-the-Art Models
 
-## 8. Prediction Disagreement and Uncertainty Analysis
+To evaluate the performance of the developed models in a broader research context, their results were compared with published machine-learning studies on polymer property prediction.
+
+|Property|Published study|Reported performance|
+|--------|---------------|--------------------|
+|Cp|Ishikiriyama (2025)|R² > 0.98|
+|Eat|Kuenneth et al. (2023), polyBERT|Property-specific R² reported in supplementary results|
+|epsb|Martins et al. (2014)|R² = 0.88, MAE = 1.89|
+
+The published heat-capacity model used the ATHAS database and predicted temperature-dependent heat capacity using molecular fingerprints. The elongation-at-break study used a neural network trained on a dataset of 77 amorphous polymers.
+
+These results provide useful external reference points. However, the studies differ in dataset size, polymer representation, target-property definitions and validation strategies. Therefore, their reported metrics should not be interpreted as direct head-to-head comparisons with the present models.
+
+The current ExtraTrees-based ensemble achieved R² values of 0.8801 for Cp, 0.8930 for Eat and 0.7548 for epsb. These results demonstrate the performance of the developed framework on its selected dataset and evaluation protocol.
+
+A fair comparison with published models would require evaluating all models on the same dataset, with identical train-test splits, target transformations and evaluation metrics.
+
+## SMILES-to-Image Conversion: Demo
+
+Polymer SMILES representations were converted into 2D molecular structure images using RDKit. This step provides a visual representation of the polymer repeat units and helps inspect the generated molecular structures.
+
+### Example Generated Polymer Structures
+
+The following examples demonstrate the SMILES-to-image conversion pipeline.
+
+| Example | Generated structure |
+|---|---|
+| Polymer 1 | ![Polymer 1](Demo/SMILES_to_Images/polymer_000001.png) |
+| Polymer 2 | ![Polymer 2](Demo/SMILES_to_Images/polymer_000002.png) |
+| Polymer 3 | ![Polymer 3](Demo/SMILES_to_Images/polymer_000003.png) |
+
+*Note: Replace these example filenames with actual generated image filenames from the project.*
+
+The complete set of generated polymer images is stored separately because of its large size. A small representative sample is included in this repository for demonstration.
+
+## 9. Prediction Disagreement and Uncertainty Analysis
 
 The disagreement between the four individual experts can be used as an indicator of prediction uncertainty.
 For a given polymer, let the four expert predictions be:
@@ -267,7 +295,7 @@ $$
 (P_{\mathrm{FP}}, P_{\mathrm{Desc}}, P_{\mathrm{Graph}}, P_{\mathrm{FG}}).
 $$
 
-**8.1 Calculation of Expert Disagreement**
+**9.1 Calculation of Expert Disagreement**
 
 The disagreement score can be calculated as the standard deviation of these predictions:
 
@@ -284,7 +312,7 @@ A higher disagreement indicates that the experts provide more different predicti
 
 This disagreement can be compared with the absolute prediction error to investigate whether it is associated with model reliability.
 
-**8.2 Absolute Prediction Error**
+**9.2 Absolute Prediction Error**
 
 The absolute prediction errors were calculated separately for the two ensemble models.
 
@@ -298,7 +326,7 @@ E_{\mathrm{RidgeStack},i} =
 |y_i-\hat{y}_{\mathrm{RidgeStack},i}|
 $$
 
-**8.3 Pearson Correlation Analysis**
+**9.3 Pearson Correlation Analysis**
 
 Pearson correlation was used to investigate the linear relationship between expert disagreement and absolute prediction error.
 
@@ -313,29 +341,22 @@ The following results were obtained:
 |Cp|0.1751|0.1917|
 |Eat|0.1654|0.1791|
 |epsb|0.5242|0.5347|
-|TSy|0.1342|0.1483|
-|TSb|0.1585|0.1721|
-|YM|0.2096|0.2288|
 
-**8.4 Interpretation of Correlation Results**
+**9.4 Interpretation of Correlation Results**
 
-The results indicate that the relationship between expert disagreement and prediction error varies across polymer properties.
+- epsb shows the strongest positive correlation, indicating that higher expert disagreement tends to be associated with larger prediction errors.
 
-- epsb exhibits the strongest positive correlation, suggesting that higher expert disagreement tends to be associated with larger prediction errors.
-
-- Cp, Eat, TSy, TSb and YM exhibit relatively weak positive correlations.
+- Cp and Eat show relatively weak positive correlations.
 
 - RidgeStack consistently shows slightly higher disagreement-error correlations than the ExtraTrees-based ensemble.
 
-- The relatively weak correlations for most properties indicate that expert disagreement alone cannot fully explain prediction errors.
+- The results indicate that expert disagreement alone cannot fully explain prediction errors.
 
-An important observation is that predictive performance and the usefulness of expert disagreement as an uncertainty indicator are two different aspects of model evaluation.
+An important observation is that model predictive performance and the usefulness of disagreement as an uncertainty indicator are different aspects of evaluation.
 
-For example, the Eat experiment achieves an R² of approximately 0.893, but exhibits a weak disagreement-error correlation. In contrast, epsb achieves a lower R² of approximately 0.755 while showing a considerably stronger positive correlation.
+For example, Eat achieves an R² of approximately 0.893 but has a weak disagreement-error correlation. In contrast, epsb has a lower R² of approximately 0.755 but shows a stronger positive correlation.
 
-This suggests that expert disagreement may provide more useful information about prediction errors for certain polymer properties than for others.
-
-**8.5 Distribution of Expert Disagreement**
+**9.5 Distribution of Expert Disagreement**
 
 The following statistics summarize the disagreement distribution across the test samples.
 
@@ -343,14 +364,11 @@ The following statistics summarize the disagreement distribution across the test
 |--------|-------|---------|------------------|
 |Cp|0.040242|0.033334|0.094716|
 |Eat|0.051785|0.042706|0.121496|
-|EPSB|3.741236|2.738976|9.860247|
-|TSy|4.178687|3.693381|8.598482|
-|TSb|5.707923|5.006536|12.059233|
-|YM|130.497541|111.325993|288.892673|
+|epsb|3.741236|2.738976|9.860247|
 
 These statistics describe the distribution of expert disagreement within each property. Since the target properties have different numerical scales and units, their disagreement magnitudes should not be directly compared.
 
-**8.6 Limitations of the Uncertainty Analysis**
+**9.6 Limitations of the Uncertainty Analysis**
 
 Expert disagreement is investigated as a proxy for prediction uncertainty rather than a calibrated uncertainty estimate.
 
@@ -360,7 +378,7 @@ Further investigation using alternative uncertainty quantification techniques an
 
 _Note:_ Expert disagreement is a proxy for uncertainty, not a calibrated prediction interval or a guarantee of prediction error.
 
-## 9. Repository Structure
+## 10. Repository Structure
 
 The repository contains property-specific model implementations and their corresponding evaluation results.
 
@@ -369,20 +387,20 @@ An example organization is:
 ```text
 Polymer-Property-Prediction/
 │
+├── Demo/
+│   └── SMILES_to_Images/
+│       ├── polymer_000001.png
+│       ├── polymer_000002.png
+│       └── polymer_000003.png
+│
 ├── Property Codes/
 │   ├── Cp.ipynb
 |   ├── Eat.ipynb
-│   ├── YM.ipynb
-│   ├── TSy.ipynb
-│   ├── TSb.ipynb
 │   └── epsb.ipynb
 │
 ├── Results/
 │   ├── Cp
 |   ├── Eat
-|   ├── Tsb
-|   ├── Tsy
-|   ├── YM
 |   └── epsb
 │
 ├── Feature Extraction Code
@@ -392,7 +410,7 @@ Polymer-Property-Prediction/
 └── README.md
 ```
 
-## 10. Requirements
+## 11. Requirements
 
 The implementation uses Python and common machine learning and scientific computing libraries.
 The main dependencies include:
@@ -409,7 +427,7 @@ The main dependencies include:
 
 The exact package versions should be documented to support reproducibility.
 
-## 11. Execution Instructions
+## 12. Execution Instructions
 
 - Clone or download the repository.
   
@@ -424,7 +442,7 @@ The exact package versions should be documented to support reproducibility.
 - Review the saved model predictions and evaluation metrics.
 The feature-generation process and required input files should be documented separately if they are not included in this repository.
 
-## 12. Limitations and Future Work
+## 13. Limitations and Future Work
 
 Potential directions for further development include:
 
@@ -450,15 +468,12 @@ Potential directions for further development include:
 
 - Developing a unified framework for predicting multiple polymer properties.
 
-## 13. Conclusion
+## 14. Conclusion
 
-This project investigates a multi-representation machine learning framework for polymer property prediction.
+This project investigates a multi-representation machine-learning framework for predicting three polymer properties: heat capacity (Cp), atomization energy (Eat) and elongation at break (epsb).
 
-Four independent XGBoost experts are trained using molecular fingerprints, molecular descriptors, graph features and functional group features.
+Four independent XGBoost experts are trained using molecular fingerprints, molecular descriptors, graph features and functional group representations. Their predictions are combined using an ExtraTrees-based nonlinear stacking model and RidgeStack.
 
-Their predictions are subsequently combined using an ExtraTrees-based nonlinear stacking model and RidgeStack.
+The ExtraTrees-based ensemble achieves the highest R² across all three properties. The disagreement analysis further shows that its relationship with prediction error varies by property, with epsb exhibiting the strongest positive correlation.
 
-The framework is evaluated across six polymer properties: Cp, Eat, YM, epsb, Tsy and Tsb.
-
-The comparison between individual experts and ensemble approaches provides a basis for understanding the contribution of different molecular representations and prediction-combination strategies to polymer property prediction.
-
+Finally, literature-based polymer case studies provide a scientific basis for interpreting the predicted structure–property relationships and identifying possible directions for further investigation.
