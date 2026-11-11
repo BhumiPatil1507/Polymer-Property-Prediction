@@ -1,4 +1,7 @@
-# Polymer Property Prediction Using Multi-Expert Machine Learning, MoE and RidgeStack
+# End-to-End AI Framework for Polymer Structure Recognition and Multi-Property Prediction
+
+### Polymer Property Prediction Using Multi-Expert Machine Learning, MoE and RidgeStack
+
 ## 1. Project Overview
 
 This project focuses on developing a computational framework for polymer representation, molecular feature generation and machine learning-based prediction of polymer properties.
