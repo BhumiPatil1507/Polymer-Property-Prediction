@@ -282,8 +282,6 @@ The following examples demonstrate the SMILES-to-image conversion pipeline.
 | Polymer 2 | ![Polymer 2](Demo/SMILES_to_Images/polymer_000001.png) |
 | Polymer 3 | ![Polymer 3](Demo/SMILES_to_Images/polymer_000002.png) |
 
-*Note: Replace these example filenames with actual generated image filenames from the project.*
-
 The complete set of generated polymer images is stored separately because of its large size. A small representative sample is included in this repository for demonstration.
 
 ## 9. Prediction Disagreement and Uncertainty Analysis
