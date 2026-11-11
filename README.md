@@ -40,8 +40,6 @@ The main objectives are:
 
 - **Uncertainty Analysis:** Investigate prediction disagreement and its relationship with absolute prediction errors.
 
-- **Literature-Based Analysis:** Study selected polymers using published material-property data to interpret the predicted structure–property relationships.
-
 - **Reproducibility:** Save trained models, predictions, evaluation metrics, generated images and experimental outputs.
 
 
