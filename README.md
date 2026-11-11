@@ -271,7 +271,7 @@ The current ExtraTrees-based ensemble achieved R² values of 0.8801 for Cp, 0.89
 
 A fair comparison with published models would require evaluating all models on the same dataset, with identical train-test splits, target transformations and evaluation metrics.
 
-## 9.SMILES-to-Image Conversion: Demo
+## 9. SMILES-to-Image Conversion: Demo
 
 Polymer SMILES representations were converted into 2D molecular structure images using RDKit. This step provides a visual representation of the polymer repeat units and helps inspect the generated molecular structures.
 
