@@ -271,7 +271,7 @@ The current ExtraTrees-based ensemble achieved R² values of 0.8801 for Cp, 0.89
 
 A fair comparison with published models would require evaluating all models on the same dataset, with identical train-test splits, target transformations and evaluation metrics.
 
-### SMILES-to-Image Conversion: Demo
+## 9.SMILES-to-Image Conversion: Demo
 
 Polymer SMILES representations were converted into 2D molecular structure images using RDKit. This step provides a visual representation of the polymer repeat units and helps inspect the generated molecular structures.
 
@@ -287,7 +287,7 @@ The following examples demonstrate the SMILES-to-image conversion pipeline.
 
 The complete set of generated polymer images is stored separately because of its large size. A small representative sample is included in this repository for demonstration.
 
-## 9. Prediction Disagreement and Uncertainty Analysis
+## 10. Prediction Disagreement and Uncertainty Analysis
 
 The disagreement between the four individual experts can be used as an indicator of prediction uncertainty.
 For a given polymer, let the four expert predictions be:
@@ -296,7 +296,7 @@ $$
 (P_{\mathrm{FP}}, P_{\mathrm{Desc}}, P_{\mathrm{Graph}}, P_{\mathrm{FG}}).
 $$
 
-**9.1 Calculation of Expert Disagreement**
+**10.1 Calculation of Expert Disagreement**
 
 The disagreement score can be calculated as the standard deviation of these predictions:
 
@@ -313,7 +313,7 @@ A higher disagreement indicates that the experts provide more different predicti
 
 This disagreement can be compared with the absolute prediction error to investigate whether it is associated with model reliability.
 
-**9.2 Absolute Prediction Error**
+**10.2 Absolute Prediction Error**
 
 The absolute prediction errors were calculated separately for the two ensemble models.
 
@@ -327,7 +327,7 @@ E_{\mathrm{RidgeStack},i} =
 |y_i-\hat{y}_{\mathrm{RidgeStack},i}|
 $$
 
-**9.3 Pearson Correlation Analysis**
+**10.3 Pearson Correlation Analysis**
 
 Pearson correlation was used to investigate the linear relationship between expert disagreement and absolute prediction error.
 
@@ -343,7 +343,7 @@ The following results were obtained:
 |Eat|0.1654|0.1791|
 |epsb|0.5242|0.5347|
 
-**9.4 Interpretation of Correlation Results**
+**10.4 Interpretation of Correlation Results**
 
 - epsb shows the strongest positive correlation, indicating that higher expert disagreement tends to be associated with larger prediction errors.
 
@@ -357,7 +357,7 @@ An important observation is that model predictive performance and the usefulness
 
 For example, Eat achieves an R² of approximately 0.893 but has a weak disagreement-error correlation. In contrast, epsb has a lower R² of approximately 0.755 but shows a stronger positive correlation.
 
-**9.5 Distribution of Expert Disagreement**
+**10.5 Distribution of Expert Disagreement**
 
 The following statistics summarize the disagreement distribution across the test samples.
 
@@ -369,7 +369,7 @@ The following statistics summarize the disagreement distribution across the test
 
 These statistics describe the distribution of expert disagreement within each property. Since the target properties have different numerical scales and units, their disagreement magnitudes should not be directly compared.
 
-**9.6 Limitations of the Uncertainty Analysis**
+**10.6 Limitations of the Uncertainty Analysis**
 
 Expert disagreement is investigated as a proxy for prediction uncertainty rather than a calibrated uncertainty estimate.
 
@@ -379,7 +379,7 @@ Further investigation using alternative uncertainty quantification techniques an
 
 _Note:_ Expert disagreement is a proxy for uncertainty, not a calibrated prediction interval or a guarantee of prediction error.
 
-## 10. Repository Structure
+## 11. Repository Structure
 
 The repository contains property-specific model implementations and their corresponding evaluation results.
 
@@ -390,9 +390,9 @@ Polymer-Property-Prediction/
 │
 ├── Demo/
 │   └── SMILES_to_Images/
+│       ├── polymer_000000.png
 │       ├── polymer_000001.png
-│       ├── polymer_000002.png
-│       └── polymer_000003.png
+│       └── polymer_000002.png
 │
 ├── Property Codes/
 │   ├── Cp.ipynb
@@ -411,7 +411,7 @@ Polymer-Property-Prediction/
 └── README.md
 ```
 
-## 11. Requirements
+## 12. Requirements
 
 The implementation uses Python and common machine learning and scientific computing libraries.
 The main dependencies include:
@@ -428,7 +428,7 @@ The main dependencies include:
 
 The exact package versions should be documented to support reproducibility.
 
-## 12. Execution Instructions
+## 13. Execution Instructions
 
 - Clone or download the repository.
   
@@ -443,7 +443,7 @@ The exact package versions should be documented to support reproducibility.
 - Review the saved model predictions and evaluation metrics.
 The feature-generation process and required input files should be documented separately if they are not included in this repository.
 
-## 13. Limitations and Future Work
+## 14. Limitations and Future Work
 
 Potential directions for further development include:
 
@@ -469,7 +469,7 @@ Potential directions for further development include:
 
 - Developing a unified framework for predicting multiple polymer properties.
 
-## 14. Conclusion
+## 15. Conclusion
 
 This project investigates a multi-representation machine-learning framework for predicting three polymer properties: heat capacity (Cp), atomization energy (Eat) and elongation at break (epsb).
 
